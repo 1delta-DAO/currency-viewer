@@ -11,7 +11,7 @@ export default function Card({ assetGroup }: any) {
                     <img
                         src={assetGroup.logoURI}
                         alt={assetGroup.name}
-                        className="w-10 h-10 rounded-full"
+                        className="w-10 h-10 rounded-full object-contain"
                     />
                 )}
                 <div>
@@ -37,7 +37,7 @@ export default function Card({ assetGroup }: any) {
                                 <img
                                     src={currency.logoURI}
                                     alt={currency.symbol}
-                                    className="w-6 h-6 rounded"
+                                    className="w-6 h-6 rounded object-contain"
                                 />
                             )}
                             <div>

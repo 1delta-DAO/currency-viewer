@@ -34,13 +34,24 @@ export default function OmniCurrencyViewer() {
             });
     }, [fetchUrl]);
 
-    const omniArray = Object.values(data).filter((item: any) => {
-        const term = search?.toLowerCase();
-        return (
-            item?.name?.toLowerCase().includes(term) ||
-            item?.symbol?.toLowerCase().includes(term)
-        );
-    });
+
+    const omniArray = Object.values(data)
+        .filter((item: any) => {
+            const term = search?.toLowerCase();
+            return (
+                item?.name?.toLowerCase().includes(term) ||
+                item?.symbol?.toLowerCase().includes(term)
+            );
+        })
+        .sort((a: any, b: any) => {
+            const term = search?.toLowerCase();
+            const aExact = a?.name?.toLowerCase() === term || a?.symbol?.toLowerCase() === term;
+            const bExact = b?.name?.toLowerCase() === term || b?.symbol?.toLowerCase() === term;
+            if (aExact && !bExact) return -1;
+            if (!aExact && bExact) return 1;
+            return 0;
+        });
+
 
     const pageCount = Math.ceil(omniArray.length / PAGE_SIZE);
     const pageData = omniArray.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
