@@ -10,8 +10,8 @@ function App() {
   return (
     <BrowserRouter>
       <GithubCorner
-        title='Get started on GitHub'
-        url='https://github.com/doinel1a/vite-react-ts'
+        title='Visit 1delta'
+        url='https://github.com/1delta-DAO/'
       />
       <OmniCurrencyViewer />
     </BrowserRouter>
