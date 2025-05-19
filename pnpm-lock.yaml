@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@1delta/asset-registry':
-        specifier: ^0.0.141
-        version: 0.0.141
+        specifier: ^0.0.142
+        version: 0.0.142
       '@fortawesome/fontawesome-svg-core':
         specifier: ^6.7.2
         version: 6.7.2
@@ -138,8 +138,8 @@ importers:
 
 packages:
 
-  '@1delta/asset-registry@0.0.141':
-    resolution: {integrity: sha512-EopWlxKNZ78iSimoMNtJge4Nm0Q957KBnqTWIBUQsltWUYil6WxX/9/L93EttonW2wVMZIo/c5OeuCzx9DdbGw==}
+  '@1delta/asset-registry@0.0.142':
+    resolution: {integrity: sha512-F/W7p1Bjx+urS1jLmHEVDjHEPsIcg1dCgcylVFZy+vMeR28cCB6bsvSTLWnG7p5BRyl0KppaO+MLgzZdixbPZA==}
     engines: {node: '>=20'}
 
   '@alloc/quick-lru@5.2.0':
@@ -3097,7 +3097,7 @@ packages:
 
 snapshots:
 
-  '@1delta/asset-registry@0.0.141':
+  '@1delta/asset-registry@0.0.142':
     dependencies:
       sharp: 0.34.1
 
