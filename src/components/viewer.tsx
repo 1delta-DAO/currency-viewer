@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Input from "./input";
 import Button from "./button";
 import Card from "./card";
-import { ChevronLeft, ChevronRight, CircleDollarSign, Image } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image1D from "../assets/images/1delta_dark.svg";
 
 const PAGE_SIZE = 5;
