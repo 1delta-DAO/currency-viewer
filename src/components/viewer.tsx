@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import Input from "./input";
 import Button from "./button";
 import Card from "./card";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, CircleDollarSign, Image } from "lucide-react";
+import Image1D from "../assets/images/1delta_dark.svg";
 
 const PAGE_SIZE = 5;
 
@@ -47,13 +48,35 @@ export default function OmniCurrencyViewer() {
     return (
         <div className="p-6 max-w-5xl mx-auto">
             <div className="fixed top-0 left-0 right-0 bg-white z-10 shadow px-6 py-4">
-                <div className="mb-4 flex items-center gap-2">
-                    <Input
-                        placeholder="Enter JSON URL"
-                        value={url}
-                        onChange={(e: any) => setUrl(e.target.value)}
-                    />
-                    <Button onClick={() => setFetchUrl(url)}>Fetch</Button>
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-4">
+                        <img src={Image1D} style={{ height: "2rem", width: "2rem" }} />
+                        <div className="flex items-center gap-2">
+                            <Input
+                                placeholder="Enter other JSON URL"
+                                value={url}
+                                onChange={(e: any) => setUrl(e.target.value)}
+                            />
+                            <Button onClick={() => setFetchUrl(url)}>Fetch</Button>
+                        </div>
+                    </div>
+                    {!loading && !error && (
+                        <div className="flex items-center gap-2">
+                            <Button
+                                onClick={() => setPage((p) => Math.max(0, p - 1))}
+                                disabled={page === 0}
+                            >
+                                <ChevronLeft />
+                            </Button>
+                            <span className="text-sm">Page {page + 1} of {pageCount}</span>
+                            <Button
+                                onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
+                                disabled={page >= pageCount - 1}
+                            >
+                                <ChevronRight />
+                            </Button>
+                        </div>
+                    )}
                 </div>
                 {!loading && !error && (
                     <Input
@@ -76,22 +99,6 @@ export default function OmniCurrencyViewer() {
                         {pageData.map((assetGroup, idx) => (
                             <Card key={idx} assetGroup={assetGroup} />
                         ))}
-
-                        <div className="flex justify-center gap-4 mt-6">
-                            <Button
-                                onClick={() => setPage((p) => Math.max(0, p - 1))}
-                                disabled={page === 0}
-                            >
-                                <ChevronLeft /> Prev
-                            </Button>
-                            <p className="self-center">Page {page + 1} of {pageCount}</p>
-                            <Button
-                                onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}
-                                disabled={page >= pageCount - 1}
-                            >
-                                Next <ChevronRight />
-                            </Button>
-                        </div>
                     </div>
                 )}
             </div>
