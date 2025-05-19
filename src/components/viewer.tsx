@@ -62,7 +62,7 @@ export default function OmniCurrencyViewer() {
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-4">
                         <img src={Image1D} style={{ height: "2rem", width: "2rem" }} />
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 hidden md:block">
                             <Input
                                 placeholder="Enter other JSON URL"
                                 value={url}
