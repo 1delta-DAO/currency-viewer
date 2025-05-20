@@ -13,7 +13,7 @@
     "format": "prettier --write **/**/*.{html,css,scss,js,jsx,cjs,mjs,ts,tsx,mdx} --cache"
   },
   "dependencies": {
-    "@1delta/asset-registry": "^0.0.142",
+    "@1delta/asset-registry": "^0.0.143",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
