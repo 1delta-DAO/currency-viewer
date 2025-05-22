@@ -11,8 +11,10 @@ interface AssetInfo {
 type ApiReturn = { data: Record<string, Record<string, AssetInfo>> };
 
 const getChainLogoURI = (chainId: string) => CHAIN_INFO[chainId]?.icon;
-const getAddressExplorerLink = (chainId: string, address: string) =>
-    `${CHAIN_INFO[chainId]?.explorers[0].url}/address/${address}`;
+const getAddressExplorerLink = (chainId: string, address: string) => {
+    const baseUrl = CHAIN_INFO[chainId]?.explorers[0].url.replace(/\/$/, '');
+    return `${baseUrl}/address/${address}`;
+};
 
 const abbreviateAddress = (address: string) =>
     `${address.slice(0, 6)}...${address.slice(-4)}`;
