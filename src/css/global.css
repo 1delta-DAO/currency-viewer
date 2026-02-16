@@ -2,16 +2,98 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Light mode (default) ── */
 :root {
-  /*
-		https://tailwindcss.com/docs/customizing-colors
-	*/
-  --primary: #262626; /* neutral-800 */
-  --secondary: #171717; /* neutral-900 */
-  --tertiary: #404040; /* neutral-700 */
-  --color: #f3f3f3;
-  --accent-primary: #2563eb; /* blue-600 */
-  --accent-primary-state: #1e40af; /* blue-800 */
+  --primary: #f5f6fa;
+  --secondary: #ffffff;
+  --tertiary: #eef0f6;
+  --surface: #e4e7f0;
+  --color: #1a1d2e;
+  --color-muted: #6b7294;
+  --card-text: #1e2130;
+  --accent-primary: #6366f1;
+  --accent-primary-state: #4f46e5;
+  --accent-secondary: #0891b2;
+  --accent-gradient: linear-gradient(135deg, #6366f1, #06b6d4);
+
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.14);
+  --glow: rgba(99, 102, 241, 0.10);
+
+  --overlay-2: rgba(0, 0, 0, 0.02);
+  --overlay-4: rgba(0, 0, 0, 0.03);
+  --overlay-6: rgba(0, 0, 0, 0.05);
+  --overlay-8: rgba(0, 0, 0, 0.06);
+  --overlay-12: rgba(0, 0, 0, 0.09);
+
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --ring: rgba(0, 0, 0, 0.06);
+  --ring-hover: rgba(0, 0, 0, 0.10);
+  --address-text: #0e7490;
+  --address-hover: #0891b2;
+  --scrollbar-thumb: #d1d5e0;
+  --scrollbar-hover: #a3a8b8;
+}
+
+/* ── Dark mode ── */
+.dark {
+  --primary: #0f1117;
+  --secondary: #161922;
+  --tertiary: #1e2230;
+  --surface: #252a3a;
+  --color: #e4e6ef;
+  --color-muted: #8b90a5;
+  --card-text: #ffffff;
+  --accent-primary: #6366f1;
+  --accent-primary-state: #818cf8;
+  --accent-secondary: #06b6d4;
+  --accent-gradient: linear-gradient(135deg, #6366f1, #06b6d4);
+
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --glow: rgba(99, 102, 241, 0.15);
+
+  --overlay-2: rgba(255, 255, 255, 0.02);
+  --overlay-4: rgba(255, 255, 255, 0.04);
+  --overlay-6: rgba(255, 255, 255, 0.06);
+  --overlay-8: rgba(255, 255, 255, 0.08);
+  --overlay-12: rgba(255, 255, 255, 0.12);
+
+  --header-bg: rgba(22, 25, 34, 0.85);
+  --ring: rgba(255, 255, 255, 0.08);
+  --ring-hover: rgba(255, 255, 255, 0.14);
+  --address-text: #22d3ee;
+  --address-hover: #67e8f9;
+  --scrollbar-thumb: #252a3a;
+  --scrollbar-hover: #8b90a5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--primary);
+  color: var(--color);
+  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-hover);
 }
 
 .github-corner:hover .octo-arm {
@@ -30,6 +112,35 @@
   40%,
   80% {
     transform: rotate(10deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(99, 102, 241, 0.1);
   }
 }
 
