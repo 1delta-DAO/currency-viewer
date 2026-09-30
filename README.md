@@ -4,7 +4,7 @@ A simple asset explorer. It loads the 1delta token list and chain metadata from 
 
 ## Local development
 
-Use Node.js 20 or later and pnpm 10:
+Use Node.js 22.23.3 (pinned in `.node-version` for Cloudflare Pages builds) and pnpm 10:
 
 ```sh
 pnpm install --frozen-lockfile
@@ -13,7 +13,7 @@ pnpm build
 pnpm dev
 ```
 
-The production build can be served with `pnpm preview`.
+The production build can be served with `pnpm preview`. The PostCSS import plugin is a direct development dependency because `postcss.config.cjs` loads it during production builds.
 
 ## Dependency security
 
