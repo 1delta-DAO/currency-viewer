@@ -18,7 +18,7 @@
 
   --border: rgba(0, 0, 0, 0.08);
   --border-hover: rgba(0, 0, 0, 0.14);
-  --glow: rgba(99, 102, 241, 0.10);
+  --glow: rgba(99, 102, 241, 0.1);
 
   --overlay-2: rgba(0, 0, 0, 0.02);
   --overlay-4: rgba(0, 0, 0, 0.03);
@@ -28,7 +28,7 @@
 
   --header-bg: rgba(255, 255, 255, 0.85);
   --ring: rgba(0, 0, 0, 0.06);
-  --ring-hover: rgba(0, 0, 0, 0.10);
+  --ring-hover: rgba(0, 0, 0, 0.1);
   --address-text: #0e7490;
   --address-hover: #0891b2;
   --scrollbar-thumb: #d1d5e0;
@@ -74,11 +74,28 @@
 
 body {
   background-color: var(--primary);
+  background-image: radial-gradient(60rem 24rem at 50% -8rem, var(--glow), transparent);
+  background-repeat: no-repeat;
   color: var(--color);
-  font-family: 'Roboto', system-ui, -apple-system, sans-serif;
+  font-family:
+    'Roboto',
+    system-ui,
+    -apple-system,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Smooth scrollbar */
@@ -94,25 +111,6 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-hover);
-}
-
-.github-corner:hover .octo-arm {
-  animation: octocat-wave 560ms ease-in-out;
-}
-
-@keyframes octocat-wave {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-  20%,
-  60% {
-    transform: rotate(-25deg);
-  }
-  40%,
-  80% {
-    transform: rotate(10deg);
-  }
 }
 
 @keyframes shimmer {
@@ -136,19 +134,11 @@ body {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.2);
   }
   50% {
     box-shadow: 0 0 20px 4px rgba(99, 102, 241, 0.1);
-  }
-}
-
-@media (max-width: 500px) {
-  .github-corner:hover .octo-arm {
-    animation: none;
-  }
-  .github-corner .octo-arm {
-    animation: octocat-wave 560ms ease-in-out;
   }
 }
