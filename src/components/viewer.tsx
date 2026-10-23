@@ -16,6 +16,27 @@ import Card from './card';
 
 const DEFAULT_URL = 'https://raw.githubusercontent.com/1delta-DAO/token-lists/main/omni-list.json';
 const CHAINS_URL = 'https://raw.githubusercontent.com/1delta-DAO/chains/main/data.json';
+const SOLANA_URL = 'https://raw.githubusercontent.com/1delta-DAO/token-lists/main/solana.json';
+
+// Solana is published as its own chain list (the omni list only covers EVM/Fuel);
+// each token carries the omni `assetGroup` it belongs to, so we fold it in here.
+const mergeSolana = (omni: Record<string, any>, solanaList: Record<string, any>) => {
+  const merged = { ...omni };
+  for (const { assetGroup, currencyId, ...currency } of Object.values(solanaList)) {
+    const groupId = assetGroup ?? currencyId ?? currency.address;
+    const group = merged[groupId];
+    merged[groupId] = group
+      ? { ...group, currencies: [...group.currencies, currency] }
+      : {
+          id: groupId,
+          name: currency.name,
+          symbol: currency.symbol,
+          logoURI: currency.logoURI,
+          currencies: [currency]
+        };
+  }
+  return merged;
+};
 
 const PAGE_SIZE = 5;
 
@@ -61,10 +82,19 @@ export default function OmniCurrencyViewer() {
   useEffect(() => {
     if (!fetchUrl) return;
     setLoading(true);
-    fetch(fetchUrl)
-      .then((res) => res.json())
-      .then((json: any) => {
-        setData(json);
+    const solana =
+      fetchUrl === DEFAULT_URL
+        ? fetch(SOLANA_URL)
+            .then((res) => res.json())
+            .then((json: any) => json?.list ?? {})
+            .catch((err: any) => {
+              console.error('Failed to fetch solana list', err);
+              return {};
+            })
+        : Promise.resolve({});
+    Promise.all([fetch(fetchUrl).then((res) => res.json()), solana])
+      .then(([json, solanaList]: any[]) => {
+        setData(mergeSolana(json, solanaList));
         setLoading(false);
         setPage(0);
       })

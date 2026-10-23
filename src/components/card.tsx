@@ -23,8 +23,15 @@ const getAddressExplorerLink = (
   const chain = chainData[String(chainId)];
   const baseUrl = chain?.explorers?.[0]?.url?.replace(/\/$/, '');
   if (!baseUrl) return '#';
-  return `${baseUrl}/address/${address}`;
+  return `${baseUrl}/${EXPLORER_PATHS[String(chainId)] ?? 'address'}/${address}`;
 };
+
+// Solscan serves mints under /token, EVM explorers use /address
+const EXPLORER_PATHS: Record<string, string> = { solana: 'token' };
+
+// hex addresses are keyed lowercase; Solana mints are base58 and case-sensitive
+const normalizeAddress = (address: string) =>
+  address.startsWith('0x') ? address.toLowerCase() : address;
 
 const abbreviateAddress = (address: string) => `${address.slice(0, 6)}...${address.slice(-4)}`;
 
@@ -74,7 +81,7 @@ export default function Card({ assetGroup, chainData }: any) {
   const liquidityMap = assetGroup.currencies.reduce(
     (acc: Record<string, number>, currency: any) => {
       const chainIdStr = String(currency.chainId);
-      const addressLC = currency.address;
+      const addressLC = normalizeAddress(currency.address);
       const info: AssetInfo | undefined = assetData?.data?.[chainIdStr]?.[addressLC];
       if (info) {
         acc[`${chainIdStr}_${addressLC}`] = info.liquidity;
@@ -150,10 +157,10 @@ export default function Card({ assetGroup, chainData }: any) {
       <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3'>
         {assetGroup.currencies.map((currency: any, cidx: number) => {
           const chainIdStr = String(currency.chainId);
-          const addressLC = currency.address.toLowerCase();
+          const addressLC = normalizeAddress(currency.address);
           const info: AssetInfo | undefined = assetData?.data?.[chainIdStr]?.[addressLC];
 
-          const dataKey = `${String(currency.chainId)}_${currency.address.toLowerCase()}`;
+          const dataKey = `${chainIdStr}_${addressLC}`;
           const isHighestLiquidity = dataKey === highestLiquidityKey;
 
           return (
