@@ -127,7 +127,10 @@ export function getCurrencyTags(currency: any): Tag[] {
       label: p.savings.base ? `Savings · ${p.savings.base}` : 'Savings',
       tone: 'lime'
     });
-  if (p.oft) tags.push({ key: 'oft', label: 'OFT', tone: 'cyan' });
+  // only a `native` route means the token itself is an OFT; `adapter` routes are
+  // third-party lockboxes (e.g. Movement/Citrea bridges around mainnet USDC)
+  if (p.oft?.routes?.some((r: any) => r?.kind === 'native'))
+    tags.push({ key: 'oft', label: 'OFT', tone: 'cyan' });
   if (p.isNative) tags.push({ key: 'native', label: 'Native', tone: 'neutral' });
   else if (p.wnative) tags.push({ key: 'native', label: 'Wrapped native', tone: 'neutral' });
   if (p.receipt)
