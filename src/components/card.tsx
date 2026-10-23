@@ -9,8 +9,29 @@ interface AssetInfo {
 
 type ApiReturn = { data: Record<string, Record<string, AssetInfo>> };
 
-const getChainLogoURI = (chainData: Record<string, any>, chainId: string) =>
-  chainData[String(chainId)]?.icon;
+// same icon source as worker-api (`chainLogoURI` in @1delta/data-sdk); the registry's
+// `icon` field points at the stale chain-icons repo and is missing for newer chains
+const CHAIN_LOGO_BASE = 'https://raw.githubusercontent.com/1delta-DAO/chains/main';
+
+const getChainLogoURI = (chainId: string) => `${CHAIN_LOGO_BASE}/${String(chainId)}.webp`;
+
+function ChainLogo({ chainId, shortName }: { chainId: string; shortName?: string }) {
+  const [failed, setFailed] = useState(false);
+  if (failed)
+    return (
+      <span className='flex h-5 w-5 items-center justify-center rounded-full bg-[var(--overlay-6)] text-[8px] font-bold text-[var(--color-muted)]'>
+        {(shortName ?? String(chainId)).slice(0, 2)}
+      </span>
+    );
+  return (
+    <img
+      src={getChainLogoURI(chainId)}
+      alt={`Chain ${chainId}`}
+      className='h-5 w-5 rounded-full'
+      onError={() => setFailed(true)}
+    />
+  );
+}
 
 const getChainShortName = (chainData: Record<string, any>, chainId: string) =>
   chainData[String(chainId)]?.shortName;
@@ -177,10 +198,9 @@ export default function Card({ assetGroup, chainData }: any) {
                 <span className='text-[10px] font-medium text-[var(--color-muted)]'>
                   {getChainShortName(chainData, currency.chainId)}
                 </span>
-                <img
-                  src={getChainLogoURI(chainData, currency.chainId)}
-                  alt={`Chain ${currency.chainId}`}
-                  className='h-5 w-5 rounded-full'
+                <ChainLogo
+                  chainId={currency.chainId}
+                  shortName={getChainShortName(chainData, currency.chainId)}
                 />
               </div>
 
